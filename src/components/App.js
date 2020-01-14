@@ -3,10 +3,14 @@ import React from 'react';
 import Header from './elements/Header';
 import Home from './Home';
 
-const App = () => (<div>
+import { GlobalStyle } from './styles/GlobalStyle';
+
+const App = () => (
+  <>
     <Header />
     <Home />
-    </div>
-    )
+    <GlobalStyle />
+  </>
+)
 
 export default App;
