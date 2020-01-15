@@ -7,7 +7,9 @@ export const StyledMovieThumb = styled.div`
     /* max-height: 350px; */
     transition: all 0.3s;
     object-fit: cover;
+    border: 3px solid #66ff99;
     border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(153, 255, 187, 1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
     :hover {
       opacity: 0.8;

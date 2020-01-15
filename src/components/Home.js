@@ -27,6 +27,8 @@ const Home = () => {
   const [{ state, loading, error }, fetchMovies] = useHomeFetch();
   const [searchTerm, setSearchTerm] = useState(''); 
 
+  console.log('state');
+
   if (error) return <div>Something went wrong ...</div>;
   if (!state.movies[0]) return <Spinner />;
  
@@ -39,7 +41,21 @@ const Home = () => {
         text={state.heroImage.overview}
       />
     <SearchBar />
-    <Grid />
+    <Grid header={searchTerm ? 'Search Result' : 'Popular Movies'}>
+        {state.movies.map(movie =>(
+          <MovieThumb 
+          key={movie.id}
+          clickable
+        image={
+          movie.poster_path 
+          ? 
+          `${IMAGE_BASE_URL}${POSTER_SIZE}${movie.poster_path}` : NoImage}
+        movieId={movie.id}
+        movieName={movie.original_title}
+        />
+        ))
+        }
+      </Grid>
     <MovieThumb />
     <Spinner />
     <LoadMoreBtn />
