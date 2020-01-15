@@ -20,10 +20,12 @@ import Spinner from './elements/Spinner';
  // custom Hook
  import { useHomeFetch } from './hooks/useHomeFetch';
 
+ import NoImage from './images/no_image.jpg';
+
 const Home = () => {
 
   const [{ state, loading, error }, fetchMovies] = useHomeFetch();
-  console.log(state);
+  const [searchTerm, setSearchTerm] = useState(''); 
 
   if (error) return <div>Something went wrong ...</div>;
   if (!state.movies[0]) return <Spinner />;
