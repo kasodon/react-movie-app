@@ -56,8 +56,7 @@ const Home = () => {
         ))
         }
       </Grid>
-    <MovieThumb />
-    <Spinner />
+    { loading && <Spinner />}
     <LoadMoreBtn />
   </>
 
