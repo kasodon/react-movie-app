@@ -25,8 +25,7 @@ const MovieInfo = ({ movie }) => (
         <h1>{movie.title}</h1>
         <h3>PLOT</h3>
         <p>{movie.overview}</p>
-        </div>
-
+     
         <div className="rating-director">
           <div>
             <h3>IMDB RATING</h3>
@@ -39,6 +38,8 @@ const MovieInfo = ({ movie }) => (
             ))}
           </div>
         </div>
+      </div>
+        
 
         </div>
 
