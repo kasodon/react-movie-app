@@ -6,6 +6,8 @@ export const useMovieFetch = movieId => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  //fetching data from the server
+
   const fetchData = useCallback(async () => {
     setError(false);
     setLoading(true);
