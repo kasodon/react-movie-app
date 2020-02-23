@@ -8,6 +8,15 @@ import NotFound from './NotFound';
 
 import { GlobalStyle } from './styles/GlobalStyle';
 
+import { Security, ImplicitCallback } from '@okta/okta-react';
+
+const config = {
+  issuer: 'https://dev-970896.okta.comDashboard/oauth2/default',
+  redirectUri: window.location.origin + '/implicit/callback',
+  clientId: '{clientId}',
+  pkce: true
+}
+
 const App = () => (
   <>
     <Header />
