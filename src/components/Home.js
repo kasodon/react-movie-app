@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { withAuth } from '@okta/okta-react';
 import {
   POPULAR_BASE_URL,
   SEARCH_BASE_URL,
@@ -17,12 +19,35 @@ import Spinner from './elements/Spinner';
 
 import NoImage from './images/no_image.jpg';
 
-class Home extends Component {
+export default withAuth(
+  class Home extends Component {
   state = {
     movies: [],
     searchTerm: '',
     loading: true,
     error: false,
+    authenticated: null,
+  };
+
+  checkAuthentication = async () => {
+    const authenticated = await this.props.auth.isAuthenticated();
+    if (authenticated !== this.state.authenticated) {
+      this.setState({ authenticated });
+    }
+  };
+
+  //async componentDidMount() {}
+
+  async componentDidUpdate() {
+    this.checkAuthentication();
+  }
+
+  login = async () => {
+    this.props.auth.login('/');
+  };
+
+  logout = async () => {
+    this.props.auth.logout('/');
   };
 
   fetchMovies = async endpoint => {
@@ -63,6 +88,7 @@ class Home extends Component {
     } else {
       this.fetchMovies(POPULAR_BASE_URL);
     }
+    this.checkAuthentication();
   }
 
   searchMovies = search => {
@@ -93,6 +119,30 @@ class Home extends Component {
       loading,
       error,
     } = this.state;
+
+    if (this.state.authenticated === null) return null;
+
+      const mainContent = this.state.authenticated ? (
+        <div>
+          <p className="lead">
+            You have entered the staff portal,{' '}
+            <Link to="/">click here</Link>
+          </p>
+          <button className="btn btn-light btn-lg" onClick={this.logout}>
+            Logout
+          </button>
+        </div>
+      ) : (
+        <div>
+          <p className="lead">
+            If you are a staff member, please get your credentials from your
+            supervisor
+          </p>
+          <button className="btn btn-dark btn-lg" onClick={this.login}>
+            Login
+          </button>
+        </div>
+      );
 
     if (error) return <div>Something went wrong ...</div>;
     if (!movies[0]) return <Spinner />;
@@ -126,9 +176,12 @@ class Home extends Component {
         {currentPage < totalPages && !loading && (
           <LoadMoreBtn text="Load More" callback={this.loadMoreMovies} />
         )}
+          <div className="jumbotron">
+          <h1 className="display-4">Acme Staff Portal</h1>
+          {mainContent}
+        </div>
       </>
     );
   }
-}
+})
 
-export default Home;
